@@ -4,9 +4,10 @@
   "description": "Exports global variables using ES6 module syntax.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run eslint && npm run unit-test",
-    "unit-test": "mocha specs",
-    "eslint": "eslint ."
+    "test": "npm run eslint && npm run unit-test && npm run codecov",
+    "unit-test": "istanbul cover _mocha -- specs",
+    "eslint": "eslint .",
+    "codecov": "cat ./coverage/coverage.json | codecov"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,9 @@
   "devDependencies": {
     "broccoli-fixture": "^0.1.0",
     "chai": "^3.4.1",
+    "codecov.io": "^0.1.6",
     "eslint": "^1.10.3",
+    "istanbul": "^0.4.1",
     "mocha": "^2.3.4"
   }
 }
