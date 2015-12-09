@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/noyesa/broccoli-global-exporter.svg?branch=master)](https://travis-ci.org/noyesa/broccoli-global-exporter)
+[![codecov.io](https://codecov.io/github/noyesa/broccoli-global-exporter/coverage.svg?branch=master)](https://codecov.io/github/noyesa/broccoli-global-exporter?branch=master)
 
 # broccoli-global-exporter
 Exports global variables using ES6 module syntax.
