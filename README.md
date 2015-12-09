@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/noyesa/broccoli-global-exporter.svg?branch=master)](https://travis-ci.org/noyesa/broccoli-global-exporter)
+
 # broccoli-global-exporter
 Exports global variables using ES6 module syntax.
 
