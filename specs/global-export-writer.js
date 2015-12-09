@@ -19,6 +19,16 @@ describe('GlobalExportWriter', function() {
       })).to.be.an.instanceof(GlobalExportWriter);
     });
 
+    it('throws an error when either defaultExport or exports is not passed', function() {
+      var node = new fixture.Node({
+        'foo.js': 'function Foo() {}'
+      });
+
+      expect(function() {
+        new GlobalExportWriter(node, 'foo.js');
+      }).to.throw(Error);
+    });
+
     it('throws an error when a list of nodes is passed', function() {
       expect(function() {
         new GlobalExportWriter([new fixture.Node()], 'foo.js', {
