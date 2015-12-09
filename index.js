@@ -5,7 +5,7 @@ var util = require('util'),
 var BroccoliPlugin = require('broccoli-plugin'),
     first = require('lodash.first'),
     includes = require('lodash.includes'),
-    defaults = require('lodash.defaults');
+    defaults = require('lodash.defaults'),
     babel = require('babel');
 
 var GlobalExporter = require('./global-exporter');
