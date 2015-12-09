@@ -3,7 +3,10 @@ var util = require('util'),
     fs = require('fs');
 
 var BroccoliPlugin = require('broccoli-plugin'),
-    first = require('lodash.first');
+    first = require('lodash.first'),
+    includes = require('lodash.includes'),
+    defaults = require('lodash.defaults');
+    babel = require('babel');
 
 var GlobalExporter = require('./global-exporter');
 
@@ -17,7 +20,10 @@ function GlobalExportWriter(inputNodes, fileName, options) {
     return new GlobalExportWriter(inputNodes, fileName, options);
   }
 
-  options = options || {};
+  options = defaults(options || {}, {
+    moduleType: 'es2015',
+    exports: []
+  });
 
   if (Array.isArray(inputNodes)) {
     throw new TypeError('Does not support more than one input tree');
@@ -28,7 +34,10 @@ function GlobalExportWriter(inputNodes, fileName, options) {
   });
 
   this.fileName = fileName;
+  this.moduleType = options.moduleType;
   this.exporter = new GlobalExporter(options.defaultExport, options.exports);
+
+  this.shouldTranspile = includes(['amd', 'common'], this.moduleType);
 }
 
 util.inherits(GlobalExportWriter, BroccoliPlugin);
@@ -39,5 +48,20 @@ GlobalExportWriter.prototype.build = function() {
       destPath = path.join(this.outputPath, this.fileName),
       sourceCode = fs.readFileSync(srcPath, 'utf8');
 
-  fs.writeFileSync(destPath, this.exporter.processSourceCode(sourceCode));
+  sourceCode = this.exporter.processSourceCode(sourceCode);
+
+  if (this.shouldTranspile) {
+    sourceCode = this.transpile(sourceCode);
+  }
+
+  fs.writeFileSync(destPath, sourceCode);
+};
+
+GlobalExportWriter.prototype.transpile = function(sourceCode) {
+  var transpiled = babel.transform(sourceCode, {
+    whitelist: ['es6.modules'],
+    modules: this.moduleType
+  });
+
+  return transpiled.code;
 };

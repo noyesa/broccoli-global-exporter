@@ -53,5 +53,9 @@ GlobalExporter.prototype._getExports = function() {
  * @returns {string} Source code with the exports added
  */
 GlobalExporter.prototype.processSourceCode = function(sourceCode) {
-  return sourceCode + ';' + this._getExports();
+  var exports = this._getExports();
+  if (!/;\s*$/.test(sourceCode)) {
+    sourceCode += ';';
+  }
+  return sourceCode + exports;
 };
