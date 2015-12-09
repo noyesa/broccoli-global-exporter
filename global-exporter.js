@@ -37,7 +37,9 @@ GlobalExporter.prototype._getNamedExports = function() {
  * @private
  */
 GlobalExporter.prototype._getDefaultExport = function() {
-  return 'export default ' + this.defaultExport;
+  if (this.defaultExport) {
+    return 'export default ' + this.defaultExport;
+  }
 };
 
 /**
@@ -46,8 +48,13 @@ GlobalExporter.prototype._getDefaultExport = function() {
  * @private
  */
 GlobalExporter.prototype._getExports = function() {
-  var exports = this._getNamedExports();
-  exports.push(this._getDefaultExport());
+  var exports = this._getNamedExports(),
+      defaultExport = this._getDefaultExport();
+
+  if (defaultExport) {
+    exports.push(this._getDefaultExport());
+  }
+
   return exports.join(';\n') + ';';
 };
 
@@ -64,5 +71,5 @@ GlobalExporter.prototype.processSourceCode = function(sourceCode) {
     sourceCode += ';';
   }
 
-  return sourceCode + exports;
+  return sourceCode + '\n' + exports;
 };
