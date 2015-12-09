@@ -54,8 +54,11 @@ GlobalExporter.prototype._getExports = function() {
  */
 GlobalExporter.prototype.processSourceCode = function(sourceCode) {
   var exports = this._getExports();
+
+  // Add a leading semi-colon iff the last non-whitespace character is not one.
   if (!/;\s*$/.test(sourceCode)) {
     sourceCode += ';';
   }
+
   return sourceCode + exports;
 };
