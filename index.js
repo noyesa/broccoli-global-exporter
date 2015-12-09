@@ -13,6 +13,10 @@ module.exports = GlobalExportWriter;
  * Broccoli plugin that adds ES6 export statements to files.
  */
 function GlobalExportWriter(inputNodes, fileName, options) {
+  if (!(this instanceof GlobalExportWriter)) {
+    return new GlobalExportWriter(inputNodes, fileName, options);
+  }
+
   options = options || {};
 
   if (Array.isArray(inputNodes)) {
