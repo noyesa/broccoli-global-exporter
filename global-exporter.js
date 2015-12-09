@@ -1,3 +1,5 @@
+module.exports = GlobalExporter;
+
 /**
  * Generates the export statements for source code.
  * @param {string} defaultExport Name of the global variable to export as default
@@ -40,8 +42,8 @@ GlobalExporter.prototype._getDefaultExport = function() {
  * @private
  */
 GlobalExporter.prototype._getExports = function() {
-  var exports = this.getNamedExports();
-  exports.push(this.getDefaultExport());
+  var exports = this._getNamedExports();
+  exports.push(this._getDefaultExport());
   return exports.join(';\n') + ';';
 };
 
@@ -51,5 +53,5 @@ GlobalExporter.prototype._getExports = function() {
  * @returns {string} Source code with the exports added
  */
 GlobalExporter.prototype.processSourceCode = function(sourceCode) {
-  return sourceCode + ';' + this.getExports();
+  return sourceCode + ';' + this._getExports();
 };
