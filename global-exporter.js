@@ -8,6 +8,10 @@ module.exports = GlobalExporter;
 function GlobalExporter(defaultExport, exports) {
   exports = exports || [];
 
+  if (!(this instanceof GlobalExporter)) {
+    return new GlobalExporter(defaultExport, exports);
+  }
+
   if (!(defaultExport || exports.length)) {
     throw new Error('Must provide either default or named exports, or both.');
   }
