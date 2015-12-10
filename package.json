@@ -1,6 +1,6 @@
 {
   "name": "broccoli-global-exporter",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Exports global variables using ES6 module syntax.",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/noyesa/broccoli-global-exporter.git"
   },
   "keywords": [
-    "broccoli-plugins"
+    "broccoli-plugin"
   ],
   "author": "Andrew Noyes <noyesa@gmail.com>",
   "license": "MIT",
