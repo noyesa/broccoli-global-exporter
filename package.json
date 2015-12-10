@@ -14,7 +14,7 @@
     "url": "git+https://github.com/noyesa/broccoli-global-exporter.git"
   },
   "keywords": [
-    "broccoli-plugins"
+    "broccoli-plugin"
   ],
   "author": "Andrew Noyes <noyesa@gmail.com>",
   "license": "MIT",
