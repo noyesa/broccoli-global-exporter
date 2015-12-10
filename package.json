@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/noyesa/broccoli-global-exporter#readme",
   "dependencies": {
-    "babel": "^5.5.8",
+    "babel": "^5.8.34",
     "broccoli-plugin": "^1.2.1",
     "lodash.assign": "^3.2.0",
     "lodash.defaults": "^3.1.2",
