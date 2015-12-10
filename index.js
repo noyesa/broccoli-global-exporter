@@ -6,6 +6,7 @@ var BroccoliPlugin = require('broccoli-plugin'),
     first = require('lodash.first'),
     includes = require('lodash.includes'),
     defaults = require('lodash.defaults'),
+    assign = require('lodash.assign'),
     babel = require('babel');
 
 var GlobalExporter = require('./global-exporter');
@@ -41,6 +42,7 @@ function GlobalExportWriter(inputTree, fileName, options) {
 
   this.fileName = fileName;
   this.moduleType = options.moduleType;
+  this.babelConfig = options.babel || {};
   this.exporter = new GlobalExporter(options.defaultExport, options.exports);
   this.shouldTranspile = includes(['amd', 'common'], this.moduleType);
 }
@@ -70,10 +72,11 @@ GlobalExportWriter.prototype.build = function() {
  * @private
  */
 GlobalExportWriter.prototype._transpile = function(sourceCode) {
-  var transpiled = babel.transform(sourceCode, {
+  var transpiled = babel.transform(sourceCode, assign({}, this.babelConfig, {
     whitelist: ['es6.modules'],
-    modules: this.moduleType
-  });
+    modules: this.moduleType,
+    compact: false
+  }));
 
   return transpiled.code;
 };
