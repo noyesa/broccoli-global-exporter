@@ -53,8 +53,7 @@ util.inherits(GlobalExportWriter, BroccoliPlugin);
  * Adds exports to a source code file.
  */
 GlobalExportWriter.prototype.build = function() {
-  var inputPath = first(this.inputPaths),
-      srcPath = path.join(inputPath, this.fileName),
+  var srcPath = path.join(first(this.inputPaths), this.fileName),
       destPath = path.join(this.outputPath, this.fileName),
       sourceCode = fs.readFileSync(srcPath, 'utf8');
 
