@@ -11,8 +11,6 @@ var BroccoliPlugin = require('broccoli-plugin'),
 
 var GlobalExporter = require('./global-exporter');
 
-module.exports = GlobalExportWriter;
-
 /**
  * Broccoli plugin that adds ES6 export statements to files.
  * @param {string|object} inputTree The tree that contains the file that exports will be added to
@@ -22,7 +20,7 @@ module.exports = GlobalExportWriter;
  * @param {string} [options.defaultExport] The name of the default export for the file
  * @param {string[]} [options.exports=[]] List of named exports
  */
-function GlobalExportWriter(inputTree, fileName, options = {}) {
+export default function GlobalExportWriter(inputTree, fileName, options = {}) {
   if (!(this instanceof GlobalExportWriter)) {
     return new GlobalExportWriter(inputTree, fileName, options);
   }

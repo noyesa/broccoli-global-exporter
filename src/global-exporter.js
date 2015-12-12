@@ -1,11 +1,9 @@
-module.exports = GlobalExporter;
-
 /**
  * Generates the export statements for source code.
  * @param {string} defaultExport Name of the global variable to export as default
  * @param {string[]} [exports=[]] Named exports
  */
-function GlobalExporter(defaultExport, exports = []) {
+export default function GlobalExporter(defaultExport, exports = []) {
   if (!(this instanceof GlobalExporter)) {
     return new GlobalExporter(defaultExport, exports);
   }
