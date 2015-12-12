@@ -5,9 +5,7 @@ module.exports = GlobalExporter;
  * @param {string} defaultExport Name of the global variable to export as default
  * @param {string[]} [exports=[]] Named exports
  */
-function GlobalExporter(defaultExport, exports) {
-  exports = exports || [];
-
+function GlobalExporter(defaultExport, exports = []) {
   if (!(this instanceof GlobalExporter)) {
     return new GlobalExporter(defaultExport, exports);
   }
@@ -27,7 +25,7 @@ function GlobalExporter(defaultExport, exports) {
  */
 GlobalExporter.prototype._getNamedExports = function() {
   return this.exports.map(function(namedExport) {
-    return 'export ' + namedExport;
+    return `export ${namedExport}`;
   });
 };
 
@@ -38,7 +36,7 @@ GlobalExporter.prototype._getNamedExports = function() {
  */
 GlobalExporter.prototype._getDefaultExport = function() {
   if (this.defaultExport) {
-    return 'export default ' + this.defaultExport;
+    return `export default ${this.defaultExport}`;
   }
 };
 
@@ -71,5 +69,5 @@ GlobalExporter.prototype.processSourceCode = function(sourceCode) {
     sourceCode += ';';
   }
 
-  return sourceCode + '\n' + exports;
+  return `${sourceCode}\n${exports}`;
 };

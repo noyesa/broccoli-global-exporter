@@ -22,12 +22,12 @@ module.exports = GlobalExportWriter;
  * @param {string} [options.defaultExport] The name of the default export for the file
  * @param {string[]} [options.exports=[]] List of named exports
  */
-function GlobalExportWriter(inputTree, fileName, options) {
+function GlobalExportWriter(inputTree, fileName, options = {}) {
   if (!(this instanceof GlobalExportWriter)) {
     return new GlobalExportWriter(inputTree, fileName, options);
   }
 
-  options = defaults(options || {}, {
+  options = defaults(options, {
     moduleType: 'es2015',
     exports: []
   });
