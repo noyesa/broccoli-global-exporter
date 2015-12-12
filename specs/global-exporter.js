@@ -1,5 +1,5 @@
 var expect = require('chai').expect,
-    GlobalExporter = require('../global-exporter');
+    GlobalExporter = require('../src/global-exporter');
 
 describe('GlobalExporter', function() {
   it('is a thing', function() {
