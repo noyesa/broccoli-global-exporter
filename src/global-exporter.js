@@ -45,8 +45,8 @@ assign(GlobalExporter.prototype, {
    * @private
    */
   _getExports() {
-    var exports = this._getNamedExports(),
-        defaultExport = this._getDefaultExport();
+    const exports = this._getNamedExports(),
+          defaultExport = this._getDefaultExport();
 
     if (defaultExport) {
       exports.push(this._getDefaultExport());
@@ -61,7 +61,7 @@ assign(GlobalExporter.prototype, {
    * @returns {string} Source code with the exports added
    */
   processSourceCode(sourceCode) {
-    var exports = this._getExports();
+    const exports = this._getExports();
 
     // Add a leading semi-colon iff the last non-whitespace character is not one.
     if (!/;\s*$/.test(sourceCode)) {

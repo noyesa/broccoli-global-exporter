@@ -52,9 +52,9 @@ assign(GlobalExportWriter.prototype, {
    * Adds exports to a source code file.
    */
   build() {
-    var srcPath = path.join(first(this.inputPaths), this.fileName),
-        destPath = path.join(this.outputPath, this.fileName),
-        sourceCode = fs.readFileSync(srcPath, 'utf8');
+    const srcPath = path.join(first(this.inputPaths), this.fileName),
+          destPath = path.join(this.outputPath, this.fileName);
+    let sourceCode = fs.readFileSync(srcPath, 'utf8');
 
     sourceCode = this.exporter.processSourceCode(sourceCode);
 
@@ -70,7 +70,7 @@ assign(GlobalExportWriter.prototype, {
    * @private
    */
   _transpile(sourceCode) {
-    var transpiled = babel.transform(sourceCode, assign({}, this.babelConfig, {
+    const transpiled = babel.transform(sourceCode, assign({}, this.babelConfig, {
       whitelist: ['es6.modules'],
       modules: this.moduleType,
       compact: false
