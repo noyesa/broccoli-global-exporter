@@ -5,11 +5,12 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "npm run eslint && npm run unit-test && npm run codecov",
-    "unit-test": "npm run clean && npm run transpile && istanbul cover _mocha -- specs",
+    "unit-test": "npm run transpile && istanbul cover _mocha -- specs",
     "eslint": "eslint .",
     "codecov": "cat ./coverage/coverage.json | codecov",
-    "transpile": "babel src --out-dir dist",
-    "clean": "rm -rf dist"
+    "transpile": "npm run clean && babel src --out-dir dist",
+    "clean": "rm -rf dist",
+    "prepublish": "npm run transpile"
   },
   "repository": {
     "type": "git",

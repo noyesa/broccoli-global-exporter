@@ -1,15 +1,15 @@
-var util = require('util'),
-    path = require('path'),
-    fs = require('fs');
+import util from 'util';
+import path from 'path';
+import fs from 'fs';
 
-var BroccoliPlugin = require('broccoli-plugin'),
-    first = require('lodash.first'),
-    includes = require('lodash.includes'),
-    defaults = require('lodash.defaults'),
-    assign = require('lodash.assign'),
-    babel = require('babel');
+import BroccoliPlugin from 'broccoli-plugin';
+import first from 'lodash.first';
+import includes from 'lodash.includes';
+import defaults from 'lodash.defaults';
+import assign from 'lodash.assign';
+import babel from 'babel';
 
-var GlobalExporter = require('./global-exporter');
+import GlobalExporter from './global-exporter';
 
 /**
  * Broccoli plugin that adds ES6 export statements to files.
@@ -47,33 +47,35 @@ export default function GlobalExportWriter(inputTree, fileName, options = {}) {
 
 util.inherits(GlobalExportWriter, BroccoliPlugin);
 
-/**
- * Adds exports to a source code file.
- */
-GlobalExportWriter.prototype.build = function() {
-  var srcPath = path.join(first(this.inputPaths), this.fileName),
-      destPath = path.join(this.outputPath, this.fileName),
-      sourceCode = fs.readFileSync(srcPath, 'utf8');
+assign(GlobalExportWriter.prototype, {
+  /**
+   * Adds exports to a source code file.
+   */
+  build() {
+    var srcPath = path.join(first(this.inputPaths), this.fileName),
+        destPath = path.join(this.outputPath, this.fileName),
+        sourceCode = fs.readFileSync(srcPath, 'utf8');
 
-  sourceCode = this.exporter.processSourceCode(sourceCode);
+    sourceCode = this.exporter.processSourceCode(sourceCode);
 
-  if (this.shouldTranspile) {
-    sourceCode = this._transpile(sourceCode);
+    if (this.shouldTranspile) {
+      sourceCode = this._transpile(sourceCode);
+    }
+
+    fs.writeFileSync(destPath, sourceCode);
+  },
+
+  /**
+   * Transpiles ES6 modules to a different type.
+   * @private
+   */
+  _transpile(sourceCode) {
+    var transpiled = babel.transform(sourceCode, assign({}, this.babelConfig, {
+      whitelist: ['es6.modules'],
+      modules: this.moduleType,
+      compact: false
+    }));
+
+    return transpiled.code;
   }
-
-  fs.writeFileSync(destPath, sourceCode);
-};
-
-/**
- * Transpiles ES6 modules to a different type.
- * @private
- */
-GlobalExportWriter.prototype._transpile = function(sourceCode) {
-  var transpiled = babel.transform(sourceCode, assign({}, this.babelConfig, {
-    whitelist: ['es6.modules'],
-    modules: this.moduleType,
-    compact: false
-  }));
-
-  return transpiled.code;
-};
+});
