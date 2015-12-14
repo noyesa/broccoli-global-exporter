@@ -1,13 +1,16 @@
 {
   "name": "broccoli-global-exporter",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Exports global variables using ES6 module syntax.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "npm run eslint && npm run unit-test && npm run codecov",
-    "unit-test": "istanbul cover _mocha -- specs",
+    "unit-test": "npm run transpile && istanbul cover _mocha -- specs",
     "eslint": "eslint .",
-    "codecov": "cat ./coverage/coverage.json | codecov"
+    "codecov": "cat ./coverage/coverage.json | codecov",
+    "transpile": "npm run clean && babel src --out-dir dist",
+    "clean": "rm -rf dist",
+    "prepublish": "npm run transpile"
   },
   "repository": {
     "type": "git",
