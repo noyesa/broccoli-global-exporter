@@ -49,7 +49,7 @@ assign(GlobalExporter.prototype, {
           defaultExport = this._getDefaultExport();
 
     if (defaultExport) {
-      exports.push(this._getDefaultExport());
+      exports.push(defaultExport);
     }
 
     return exports.join(';\n') + ';';
