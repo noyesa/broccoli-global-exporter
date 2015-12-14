@@ -28,14 +28,3 @@ export default Foo;
 export bar;
 export baz;
 ```
-
-Optionally, if you don't want to target ES6 exports, the modules can be output in AMD or CJS by specifying `moduleType` in the options:
-
-```js
-var exported = exportGlobals('src', 'foo.js', {
-  defaultExport: 'Foo',
-  moduleType: 'amd'
-});
-```
-
-The accepted module types are `amd` and `common`. Babel is used for this transformation, and operates on the entire file with only the `es6.modules` transformer enabled, so beware it could transform source code if it already has exports/imports.

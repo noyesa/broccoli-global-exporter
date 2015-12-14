@@ -46,10 +46,8 @@ assign(GlobalExportWriter.prototype, {
    */
   build() {
     const srcPath = path.join(first(this.inputPaths), this.fileName),
-          destPath = path.join(this.outputPath, this.fileName);
-    let sourceCode = fs.readFileSync(srcPath, 'utf8');
-
-    sourceCode = this.exporter.processSourceCode(sourceCode);
+          destPath = path.join(this.outputPath, this.fileName),
+          sourceCode = this.exporter.processSourceCode(fs.readFileSync(srcPath, 'utf8'));
     fs.writeFileSync(destPath, sourceCode);
   }
 });
