@@ -19,11 +19,6 @@ describe('GlobalExporter', function() {
       }).to.not.throw(Error);
     });
 
-    it('can be instantiated without using the new keyword', function() {
-      var exporter = GlobalExporter('Foo');
-      expect(exporter).to.be.an.instanceof(GlobalExporter);
-    });
-
     it('sets the property defaultExports with the first argument', function() {
       var exporter = new GlobalExporter('Foo');
       expect(exporter)
