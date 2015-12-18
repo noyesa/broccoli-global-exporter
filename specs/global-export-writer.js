@@ -95,4 +95,25 @@ describe('GlobalExportWriter', function() {
       });
     }).then(done);
   });
+
+  it('adds CommonJS exports', function(done) {
+    var files,
+        node;
+
+    files = {
+      'foo.js': 'function Foo() {};\nvar bar = {};'
+    };
+
+    node = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+      defaultExport: 'Foo',
+      exports: ['bar'],
+      moduleType: 'cjs'
+    });
+
+    fixture.build(node).then(function(fixture) {
+      var foo = fixture['foo.js'];
+      expect(foo).to.contain('exports[\'default\'] = Foo');
+      expect(foo).to.contain('exports.bar = bar');
+    }).then(done);
+  });
 });
