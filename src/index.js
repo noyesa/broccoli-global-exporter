@@ -16,6 +16,7 @@ import { getExporter } from './global-exporter';
  * @param {object} [options={}] Configuration options for export writer
  * @param {string} [options.defaultExport] The name of the default export for the file
  * @param {string[]} [options.exports=[]] List of named exports
+ * @param {string} [options.moduleType=es2015] Type of module exports
  */
 export default function GlobalExportWriter(inputTree, fileName, options = {}) {
   if (!(this instanceof GlobalExportWriter)) {
@@ -23,7 +24,8 @@ export default function GlobalExportWriter(inputTree, fileName, options = {}) {
   }
 
   options = defaults(options, {
-    exports: []
+    exports: [],
+    moduleType: 'es2015'
   });
 
   if (Array.isArray(inputTree)) {
@@ -35,7 +37,7 @@ export default function GlobalExportWriter(inputTree, fileName, options = {}) {
   });
 
   this.fileName = fileName;
-  this.exporter = getExporter('es2015', options.defaultExport, options.exports);
+  this.exporter = getExporter(options.moduleType, options.defaultExport, options.exports);
 }
 
 util.inherits(GlobalExportWriter, BroccoliPlugin);

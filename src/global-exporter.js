@@ -18,18 +18,14 @@ export class BaseGlobalExporter {
    * @returns {string[]} Array of named export strings
    * @abstract
    */
-  getNamedExports() {
-    throw new Error('not implemented');
-  }
+  getNamedExports() {}
 
   /**
    * Returns default export string.
    * @returns {string} Default export string
    * @abstract
    */
-  getDefaultExport() {
-    throw new Error('not implemented');
-  }
+  getDefaultExport() {}
 
   /**
    * Gets array of all the export statements.
@@ -96,7 +92,7 @@ export class CjsGlobalExporter extends BaseGlobalExporter {
    * @returns {string[]} Array of named export strings
    */
   getNamedExports() {
-    return this.exports.map(namedExport => `exports.${namedExport} = ${namedExport};`)
+    return this.exports.map(namedExport => `exports.${namedExport} = ${namedExport};`);
   }
 
   /**
