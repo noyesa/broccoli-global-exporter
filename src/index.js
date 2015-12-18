@@ -7,7 +7,7 @@ import first from 'lodash.first';
 import defaults from 'lodash.defaults';
 import assign from 'lodash.assign';
 
-import GlobalExporter from './global-exporter';
+import { getExporter } from './global-exporter';
 
 /**
  * Broccoli plugin that adds ES6 export statements to files.
@@ -35,7 +35,7 @@ export default function GlobalExportWriter(inputTree, fileName, options = {}) {
   });
 
   this.fileName = fileName;
-  this.exporter = new GlobalExporter(options.defaultExport, options.exports);
+  this.exporter = getExporter('es2015', options.defaultExport, options.exports);
 }
 
 util.inherits(GlobalExportWriter, BroccoliPlugin);
