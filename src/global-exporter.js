@@ -92,7 +92,7 @@ export class CjsGlobalExporter extends BaseGlobalExporter {
    * @returns {string[]} Array of named export strings
    */
   getNamedExports() {
-    return this.exports.map(namedExport => `exports.${namedExport} = ${namedExport};`);
+    return this.exports.map(namedExport => `exports.${namedExport} = ${namedExport}`);
   }
 
   /**
@@ -103,9 +103,9 @@ export class CjsGlobalExporter extends BaseGlobalExporter {
     if (this.defaultExport) {
       return `
         Object.defineProperty(exports, '__esModule', {
-          value: true;
+          value: true
         });
-        exports['default'] = ${this.defaultExport};
+        exports['default'] = ${this.defaultExport}
       `;
     }
   }

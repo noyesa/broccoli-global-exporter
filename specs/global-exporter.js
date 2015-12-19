@@ -146,7 +146,7 @@ describe('CjsGlobalExporter', function() {
       expect(sourceCode).to.not.contain('exports[\'default\'] = foo;');
       expect(sourceCode).to.not.contain('__esModule');
       sourceCode = exporter.processSourceCode(sourceCode);
-      expect(sourceCode).to.contain('exports[\'default\'] = foo;');
+      expect(sourceCode).to.contain('exports[\'default\'] = foo');
       expect(sourceCode).to.contain('__esModule');
     });
 
@@ -154,9 +154,9 @@ describe('CjsGlobalExporter', function() {
       var sourceCode = 'var foo = 1;',
           exporter = new CjsGlobalExporter(undefined, ['foo']);
 
-      expect(sourceCode).to.not.contain('exports.foo = foo;');
+      expect(sourceCode).to.not.contain('exports.foo = foo');
       sourceCode = exporter.processSourceCode(sourceCode);
-      expect(sourceCode).to.contain('exports.foo = foo;');
+      expect(sourceCode).to.contain('exports.foo = foo');
     });
   });
 });
