@@ -4,13 +4,10 @@
   "description": "Exports global variables using ES6 module syntax.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npm run eslint && npm run unit-test && npm run codecov",
-    "unit-test": "npm run transpile && istanbul cover _mocha -- specs --timeout 5000",
-    "eslint": "eslint .",
+    "test": "npm run unit-test && npm run codecov",
+    "unit-test": "eslint . && babel-istanbul cover _mocha -- specs --timeout 5000",
     "codecov": "cat ./coverage/coverage.json | codecov",
-    "transpile": "npm run clean && babel src --out-dir dist",
-    "clean": "rm -rf dist",
-    "prepublish": "npm run transpile"
+    "prepublish": "rm -rf dist && babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -34,6 +31,8 @@
     "lodash.includes": "^3.1.3"
   },
   "devDependencies": {
+    "babel-core": "^5.8.34",
+    "babel-istanbul": "^0.5.9",
     "broccoli-fixture": "^0.1.0",
     "chai": "^3.4.1",
     "codecov.io": "^0.1.6",
