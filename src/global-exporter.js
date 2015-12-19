@@ -103,7 +103,7 @@ export class CjsGlobalExporter extends BaseGlobalExporter {
     if (this.defaultExport) {
       return `
         Object.defineProperty(exports, '__esModule', {
-          value: true;
+          value: true
         });
         exports['default'] = ${this.defaultExport}
       `;
