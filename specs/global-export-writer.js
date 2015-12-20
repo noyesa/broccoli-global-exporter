@@ -1,7 +1,7 @@
 var expect = require('chai').expect,
     fixture = require('broccoli-fixture');
 
-var GlobalExportWriter = require('../src/index');
+var GlobalExportWriter = require('../src/index').default;
 
 describe('GlobalExportWriter', function() {
   it('exists', function() {
