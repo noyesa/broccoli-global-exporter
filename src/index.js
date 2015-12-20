@@ -9,6 +9,10 @@ import assign from 'lodash.assign';
 
 import { getExporter } from './global-exporter';
 
+// This must be here because Babel 6 no longer does this when a module contains
+// only a single default export.
+module.exports = GlobalExportWriter;
+
 /**
  * Broccoli plugin that adds ES6 export statements to files.
  * @param {string|object} inputTree The tree that contains the file that exports will be added to
