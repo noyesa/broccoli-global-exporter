@@ -1,6 +1,5 @@
-var expect = require('chai').expect,
-    CjsGlobalExporter = require('../src/global-exporter').CjsGlobalExporter,
-    Es6GlobalExporter = require('../src/global-exporter').Es6GlobalExporter;
+import { expect } from 'chai';
+import { CjsGlobalExporter, Es6GlobalExporter } from '../src/global-exporter';
 
 describe('Es6GlobalExporter', function() {
   it('is a thing', function() {
