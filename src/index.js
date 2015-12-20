@@ -22,7 +22,7 @@ module.exports = GlobalExportWriter;
  * @param {string[]} [options.exports=[]] List of named exports
  * @param {string} [options.moduleType=es2015] Type of module exports
  */
-export default function GlobalExportWriter(inputTree, fileName, options = {}) {
+function GlobalExportWriter(inputTree, fileName, options = {}) {
   if (!(this instanceof GlobalExportWriter)) {
     return new GlobalExportWriter(inputTree, fileName, options);
   }
