@@ -9,16 +9,6 @@ describe('GlobalExportWriter', function() {
   });
 
   describe('construction', function() {
-    it('can be constructed without the `new` keyword', function() {
-      var node = new fixture.Node({
-        'foo.js': 'function Foo() {}'
-      });
-
-      expect(GlobalExportWriter(node, 'foo.js', {
-        defaultExport: 'Foo'
-      })).to.be.an.instanceof(GlobalExportWriter);
-    });
-
     it('throws an error when either defaultExport or exports is not passed', function() {
       var node = new fixture.Node({
         'foo.js': 'function Foo() {}'

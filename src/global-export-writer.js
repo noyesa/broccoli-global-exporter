@@ -1,11 +1,9 @@
-import util from 'util';
 import path from 'path';
 import fs from 'fs';
 
 import BroccoliPlugin from 'broccoli-plugin';
 import first from 'lodash.first';
 import defaults from 'lodash.defaults';
-import assign from 'lodash.assign';
 
 import { getExporter } from './global-exporter';
 
@@ -18,31 +16,25 @@ import { getExporter } from './global-exporter';
  * @param {string[]} [options.exports=[]] List of named exports
  * @param {string} [options.moduleType=es2015] Type of module exports
  */
-export default function GlobalExportWriter(inputTree, fileName, options = {}) {
-  if (!(this instanceof GlobalExportWriter)) {
-    return new GlobalExportWriter(inputTree, fileName, options);
+export default class GlobalExportWriter extends BroccoliPlugin {
+  constructor(inputTree, fileName, options = {}) {
+    options = defaults(options, {
+      exports: [],
+      moduleType: 'es2015'
+    });
+
+    if (Array.isArray(inputTree)) {
+      throw new TypeError('Does not support more than one input tree');
+    }
+
+    super([inputTree], {
+      annotations: options.annotations
+    });
+
+    this.fileName = fileName;
+    this.exporter = getExporter(options.moduleType, options.defaultExport, options.exports);
   }
 
-  options = defaults(options, {
-    exports: [],
-    moduleType: 'es2015'
-  });
-
-  if (Array.isArray(inputTree)) {
-    throw new TypeError('Does not support more than one input tree');
-  }
-
-  BroccoliPlugin.call(this, [inputTree], {
-    annotations: options.annotations
-  });
-
-  this.fileName = fileName;
-  this.exporter = getExporter(options.moduleType, options.defaultExport, options.exports);
-}
-
-util.inherits(GlobalExportWriter, BroccoliPlugin);
-
-assign(GlobalExportWriter.prototype, {
   /**
    * Adds exports to a source code file.
    */
@@ -52,4 +44,4 @@ assign(GlobalExportWriter.prototype, {
           sourceCode = this.exporter.processSourceCode(fs.readFileSync(srcPath, 'utf8'));
     fs.writeFileSync(destPath, sourceCode);
   }
-});
+}
