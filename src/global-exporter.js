@@ -34,11 +34,14 @@ export class BaseGlobalExporter {
   /**
    * Gets array of all the export statements.
    * @returns {string[]} Gets array of all named exports
-   * @private
    */
   getExports() {
     const exports = this.getNamedExports(),
           defaultExport = this.getDefaultExport();
+
+    if (!Array.isArray(exports)) {
+      throw new TypeError('getNamedExports must return an array of strings');
+    }
 
     if (defaultExport) {
       exports.push(defaultExport);
