@@ -25,7 +25,8 @@
   "dependencies": {
     "broccoli-plugin": "^1.2.1",
     "lodash.defaults": "^3.1.2",
-    "lodash.first": "^3.0.0"
+    "lodash.first": "^3.0.0",
+    "lodash.isplainobject": "^3.2.0"
   },
   "devDependencies": {
     "babel": "^6.3.13",

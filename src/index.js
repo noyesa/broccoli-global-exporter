@@ -1,16 +1,32 @@
-import GlobalExportWriter from './global-export-writer';
+import isPlainObject from 'lodash.isplainobject';
+import GlobalExportWriter, { MultiGlobalExportWriter } from './global-export-writer';
 
 module.exports = exportGlobals;
 
 /**
- * Broccoli plugin that adds ES6 export statements to files.
- * @param {string|object} inputTree The tree that contains the file that exports will be added to
- * @param {string} fileName Name of the file in the input tree to add exports to
- * @param {object} [options={}] Configuration options for export writer
- * @param {string} [options.defaultExport] The name of the default export for the file
- * @param {string[]} [options.exports=[]] List of named exports
- * @param {string} [options.moduleType=es2015] Type of module exports
+ * Accepts an argument list and determines whether the calling code is using
+ * the deprecated single-file API for this plugin, or the new, object
+ * hash-map API.
+ * @param {Array} args Argument list passed to the plugin Factory
+ * @param {Boolean} True if the argument list is for the old API, false for new
  */
-function exportGlobals(inputTree, fileName, options) {
-  return new GlobalExportWriter(inputTree, fileName, options);
+function isOldApi(args) {
+  const [inputTree, fileName, options = {}] = args;
+  return typeof inputTree === 'object' &&
+    typeof fileName === 'string' &&
+    isPlainObject(options);
+}
+
+/**
+ * Factory function that returns a Broccoli plugin that adds export statements
+ * to JavaScript files. Type-checks argument list to figure out which API is
+ * being used, the old one that supports only one file, or the new one that
+ * accepts a hash of files.
+ */
+function exportGlobals(...args) {
+  if (isOldApi(args)) {
+    return new GlobalExportWriter(...args);
+  } else {
+    return new MultiGlobalExportWriter(...args);
+  }
 }
