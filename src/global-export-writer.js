@@ -66,7 +66,7 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
 
     defaults(options, {
       moduleType: 'es2015'
-    })
+    });
 
     this.moduleType = options.moduleType;
     this.exporters = this._buildExporters(files);
@@ -82,7 +82,7 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
     return pairs(files).map(([fileName, options]) => {
       const exporter = getExporter(this.moduleType, options.defaultExport, options.exports);
       return [fileName, exporter];
-    })
+    });
   }
 
   /**

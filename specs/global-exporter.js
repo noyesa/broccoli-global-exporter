@@ -64,7 +64,7 @@ describe('BaseGlobalExporter', () => {
     it('is abstract', () => {
       const exporter = new BaseGlobalExporter('Foo');
       expect(() => exporter.getNamedExports()).to.throw(Error);
-    })
+    });
   });
 
   function buildExporter() {
@@ -158,5 +158,5 @@ describe('CjsGlobalExporter', function() {
   describe('getNamedExports', () => {
     const exporter = new CjsGlobalExporter(undefined, ['foo', 'bar']);
     expect(exporter.getNamedExports()).to.deep.equal(['exports.foo = foo', 'exports.bar = bar']);
-  })
+  });
 });

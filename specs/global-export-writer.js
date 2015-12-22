@@ -189,6 +189,6 @@ describe('MultiGlobalExportWriter', () => {
         expect(fixture).to.not.have.property('foo.js');
         done();
       }, done);
-    })
+    });
   });
 });
