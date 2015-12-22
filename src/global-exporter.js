@@ -18,14 +18,18 @@ export class BaseGlobalExporter {
    * @returns {string[]} Array of named export strings
    * @abstract
    */
-  getNamedExports() {}
+  getNamedExports() {
+    throw new Error('not implemented');
+  }
 
   /**
    * Returns default export string.
    * @returns {string} Default export string
    * @abstract
    */
-  getDefaultExport() {}
+  getDefaultExport() {
+    throw new Error('not implemented');
+  }
 
   /**
    * Gets array of all the export statements.

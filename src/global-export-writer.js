@@ -22,6 +22,12 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
     super([inputTree], {
       annotations: options.annotations
     });
+
+    defaults(options, {
+      moduleType: 'es2015'
+    })
+
+    this.moduleType = options.moduleType;
   }
 }
 

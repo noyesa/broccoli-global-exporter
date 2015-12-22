@@ -11,10 +11,8 @@ module.exports = exportGlobals;
  * @param {Boolean} True if the argument list is for the old API, false for new
  */
 function isOldApi(args) {
-  const [inputTree, fileName, options = {}] = args;
-  return typeof inputTree === 'object' &&
-    typeof fileName === 'string' &&
-    isPlainObject(options);
+  const [, fileName, options = {}] = args;
+  return typeof fileName === 'string' && isPlainObject(options);
 }
 
 /**

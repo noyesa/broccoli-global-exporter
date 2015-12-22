@@ -1,33 +1,29 @@
 import { expect } from 'chai';
-import { CjsGlobalExporter, Es6GlobalExporter } from '../src/global-exporter';
+import { BaseGlobalExporter, CjsGlobalExporter, Es6GlobalExporter } from '../src/global-exporter';
 
-describe('Es6GlobalExporter', function() {
-  it('is a thing', function() {
-    expect(Es6GlobalExporter).to.be.a('function');
-  });
+describe('BaseGlobalExporter', () => {
+  it('is a thing', () => expect(BaseGlobalExporter).to.be.a('function'));
 
-  describe('construction', function() {
-    it('throws an exception when instantiated without arguments', function() {
-      expect(function() {
-        new Es6GlobalExporter();
-      }).to.throw(Error);
+  describe('construction', () => {
+    it('throws an exception when instantiated without arguments', () => {
+      expect(() => new BaseGlobalExporter()).to.throw(Error);
     });
 
     it('instantiates without error when defaultExport is specified', function() {
       expect(function() {
-        new Es6GlobalExporter('Foo');
+        new BaseGlobalExporter('Foo');
       }).to.not.throw(Error);
     });
 
     it('sets the property defaultExports with the first argument', function() {
-      var exporter = new Es6GlobalExporter('Foo');
+      const exporter = new BaseGlobalExporter('Foo');
       expect(exporter)
         .to.have.property('defaultExport')
         .that.equals('Foo');
     });
 
     it('sets exports to an empty array when not provided', function() {
-      var exporter = new Es6GlobalExporter('Foo');
+      const exporter = new BaseGlobalExporter('Foo');
       expect(exporter)
         .to.have.property('exports')
         .that.is.an('array')
@@ -35,7 +31,7 @@ describe('Es6GlobalExporter', function() {
     });
 
     it('sets exports to the passed exports when provided', function() {
-      var exporter = new Es6GlobalExporter('Foo', ['bar', 'baz']);
+      const exporter = new BaseGlobalExporter('Foo', ['bar', 'baz']);
       expect(exporter)
         .to.have.property('exports')
         .that.is.an('array')
@@ -43,7 +39,8 @@ describe('Es6GlobalExporter', function() {
     });
 
     it('can be constructed without passing a default export', function() {
-      var exporter = new Es6GlobalExporter(undefined, ['foo', 'bar']);
+      var exporter = new BaseGlobalExporter(undefined, ['foo', 'bar']);
+
       expect(exporter)
         .to.have.property('defaultExport')
         .that.is.undefined;
@@ -53,6 +50,30 @@ describe('Es6GlobalExporter', function() {
         .that.is.an('array')
         .that.deep.equals(['foo', 'bar']);
     });
+  });
+
+  describe('getDefaultExport', () => {
+    it('is abstract', () => {
+      const exporter = new BaseGlobalExporter('Foo');
+      expect(() => exporter.getDefaultExport()).to.throw(Error);
+    });
+  });
+
+  describe('getExports', () => {
+    it('is abstract', () => {
+      const exporter = new BaseGlobalExporter('Foo');
+      expect(() => exporter.getExports()).to.throw(Error);
+    })
+  });
+});
+
+describe('Es6GlobalExporter', function() {
+  it('is a thing', function() {
+    expect(Es6GlobalExporter).to.be.a('function');
+  });
+
+  it('is a subclass of BaseGlobalExporter', () => {
+    expect(Es6GlobalExporter.prototype).to.be.instanceof(BaseGlobalExporter);
   });
 
   describe('processSourceCode', function() {
@@ -88,53 +109,8 @@ describe('CjsGlobalExporter', function() {
     expect(CjsGlobalExporter).to.be.a('function');
   });
 
-  describe('construction', function() {
-    it('throws an exception when instantiated without arguments', function() {
-      expect(function() {
-        new CjsGlobalExporter();
-      }).to.throw(Error);
-    });
-
-    it('instantiates without error when defaultExport is specified', function() {
-      expect(function() {
-        new CjsGlobalExporter('Foo');
-      }).to.not.throw(Error);
-    });
-
-    it('sets the property defaultExports with the first argument', function() {
-      var exporter = new CjsGlobalExporter('Foo');
-      expect(exporter)
-        .to.have.property('defaultExport')
-        .that.equals('Foo');
-    });
-
-    it('sets exports to an empty array when not provided', function() {
-      var exporter = new CjsGlobalExporter('Foo');
-      expect(exporter)
-        .to.have.property('exports')
-        .that.is.an('array')
-        .that.is.empty;
-    });
-
-    it('sets exports to the passed exports when provided', function() {
-      var exporter = new CjsGlobalExporter('Foo', ['bar', 'baz']);
-      expect(exporter)
-        .to.have.property('exports')
-        .that.is.an('array')
-        .that.deep.equals(['bar', 'baz']);
-    });
-
-    it('can be constructed without passing a default export', function() {
-      var exporter = new CjsGlobalExporter(undefined, ['foo', 'bar']);
-      expect(exporter)
-        .to.have.property('defaultExport')
-        .that.is.undefined;
-
-      expect(exporter)
-        .to.have.property('exports')
-        .that.is.an('array')
-        .that.deep.equals(['foo', 'bar']);
-    });
+  it('is a subclass of BaseGlobalExporter', () => {
+    expect(CjsGlobalExporter.prototype).to.be.instanceof(BaseGlobalExporter);
   });
 
   describe('processSourceCode', function() {

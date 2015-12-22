@@ -123,5 +123,24 @@ describe('MultiGlobalExportWriter', () => {
         }
       })).to.not.throw(Error);
     });
+
+    it('sets moduleType property from options object', () => {
+      const node = new fixture.Node({
+        'foo.js': 'function Foo() {}'
+      });
+
+      const writer = new MultiGlobalExportWriter(node, {
+        'foo.js': {
+          defaultExport: 'Foo'
+        }
+      }, {
+        moduleType: 'cjs'
+      });
+
+      expect(writer)
+        .to.have.property('moduleType')
+        .that.is.a('string')
+        .that.equals('cjs');
+    });
   });
 });
