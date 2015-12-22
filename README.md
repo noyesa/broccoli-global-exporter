@@ -47,3 +47,34 @@ module.exports = exportGlobals('src', {
   }
 });
 ```
+
+### Module formats
+The default format is ES2015 modules, but CommonJS is also supported. This can be handy if you're going to compile your ES6 modules down to CJS anyway, you can avoid the overhead of invoking your compiler for something we can do up front anyway.
+
+#### Supported `moduleTypes`:
+- ES6 modules - `es2015` (default)
+- CommonJS - `cjs`
+
+```js
+module.exports = exportGlobals('src', {
+  'foo.js': {
+    defaultExport: 'Foo',
+    exports: ['bar', 'baz']
+  }
+}, {
+  moduleType: 'cjs'
+});
+```
+
+This will yield the following output:
+
+```js
+exports.bar = bar;
+exports.baz = baz;
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports['default'] = Foo;
+```
+
+This CJS output is compatible with the way code compiled with babel looks for ES6 default exports by checking the `__esModule` property on the object returned from `require`. If you have no default export, this code will not be emitted.
