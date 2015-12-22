@@ -10,12 +10,12 @@ describe('GlobalExportWriter', function() {
 
   describe('construction', function() {
     it('throws an error when either defaultExport or exports is not passed', function() {
-      var node = new fixture.Node({
+      var inputTree = new fixture.Node({
         'foo.js': 'function Foo() {}'
       });
 
       expect(function() {
-        new GlobalExportWriter(node, 'foo.js');
+        new GlobalExportWriter(inputTree, 'foo.js');
       }).to.throw(Error);
     });
 
@@ -30,18 +30,18 @@ describe('GlobalExportWriter', function() {
 
   it('adds default exports to the input file', function(done) {
     var files,
-        node;
+        inputTree;
 
     files = {
       'foo.js': 'function Foo() {}'
     };
 
-    node = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
       defaultExport: 'Foo'
     });
 
-    fixture.build(node).then(function(fixture) {
-      expect(fixture).to.deep.equal({
+    fixture.build(inputTree).then(function(outputTree) {
+      expect(outputTree).to.deep.equal({
         'foo.js': 'function Foo() {};\nexport default Foo;'
       });
       done();
@@ -50,18 +50,18 @@ describe('GlobalExportWriter', function() {
 
   it('adds named exports to the input file', function(done) {
     var files,
-        node;
+        inputTree;
 
     files = {
       'foo.js': 'function Foo() {}'
     };
 
-    node = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
       exports: ['Foo']
     });
 
-    fixture.build(node).then(function(fixture) {
-      expect(fixture).to.deep.equal({
+    fixture.build(inputTree).then(function(outputTree) {
+      expect(outputTree).to.deep.equal({
         'foo.js': 'function Foo() {};\nexport Foo;'
       });
       done();
@@ -70,19 +70,19 @@ describe('GlobalExportWriter', function() {
 
   it('adds default and named exports to the input file', function(done) {
     var files,
-        node;
+        inputTree;
 
     files = {
       'foo.js': 'function Foo() {};\nvar bar = {};'
     };
 
-    node = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
       defaultExport: 'Foo',
       exports: ['bar']
     });
 
-    fixture.build(node).then(function(fixture) {
-      expect(fixture).to.deep.equal({
+    fixture.build(inputTree).then(function(outputTree) {
+      expect(outputTree).to.deep.equal({
         'foo.js': 'function Foo() {};\nvar bar = {};\nexport bar;\nexport default Foo;'
       });
       done();
@@ -91,20 +91,20 @@ describe('GlobalExportWriter', function() {
 
   it('adds CommonJS exports', function(done) {
     var files,
-        node;
+        inputTree;
 
     files = {
       'foo.js': 'function Foo() {};\nvar bar = {};'
     };
 
-    node = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
       defaultExport: 'Foo',
       exports: ['bar'],
       moduleType: 'cjs'
     });
 
-    fixture.build(node).then(function(fixture) {
-      var foo = fixture['foo.js'];
+    fixture.build(inputTree).then(function(outputTree) {
+      var foo = outputTree['foo.js'];
       expect(foo).to.contain('exports[\'default\'] = Foo');
       expect(foo).to.contain('exports.bar = bar');
       done();
@@ -117,11 +117,11 @@ describe('MultiGlobalExportWriter', () => {
 
   describe('construction', () => {
     it('can be constructed without options arguments', () => {
-      const node = new fixture.Node({
+      const inputTree = new fixture.Node({
         'foo.js': 'function Foo() {}'
       });
 
-      expect(() => new MultiGlobalExportWriter(node, {
+      expect(() => new MultiGlobalExportWriter(inputTree, {
         'foo.js': {
           defaultExport: 'Foo'
         }
@@ -129,11 +129,11 @@ describe('MultiGlobalExportWriter', () => {
     });
 
     it('sets moduleType property from options object', () => {
-      const node = new fixture.Node({
+      const inputTree = new fixture.Node({
         'foo.js': 'function Foo() {}'
       });
 
-      const writer = new MultiGlobalExportWriter(node, {
+      const writer = new MultiGlobalExportWriter(inputTree, {
         'foo.js': {
           defaultExport: 'Foo'
         }
@@ -164,12 +164,12 @@ describe('MultiGlobalExportWriter', () => {
         }
       });
 
-      fixture.build(tree).then(fixture => {
-        expect(fixture)
+      fixture.build(tree).then(outputTree => {
+        expect(outputTree)
           .to.have.property('foo.js')
           .that.equals('function Foo() {};\nexport default Foo;');
 
-        expect(fixture)
+        expect(outputTree)
           .to.have.property('bar')
           .that.is.an('object')
           .that.has.property('baz.js')
@@ -185,8 +185,8 @@ describe('MultiGlobalExportWriter', () => {
         }
       });
 
-      fixture.build(tree).then(fixture => {
-        expect(fixture).to.not.have.property('foo.js');
+      fixture.build(tree).then(outputTree => {
+        expect(outputTree).to.not.have.property('foo.js');
         done();
       }, done);
     });
