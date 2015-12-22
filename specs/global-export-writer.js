@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import fixture from 'broccoli-fixture';
 
-import { GlobalExportWriter } from '../src/global-export-writer';
+import { GlobalExportWriter, MultiGlobalExportWriter } from '../src/global-export-writer';
 
 describe('GlobalExportWriter', function() {
   it('exists', function() {
@@ -105,5 +105,23 @@ describe('GlobalExportWriter', function() {
       expect(foo).to.contain('exports[\'default\'] = Foo');
       expect(foo).to.contain('exports.bar = bar');
     }).then(done);
+  });
+});
+
+describe('MultiGlobalExportWriter', () => {
+  it('exists', () => expect(MultiGlobalExportWriter).to.be.a('function'));
+
+  describe('construction', () => {
+    it('can be constructed without options arguments', () => {
+      const node = new fixture.Node({
+        'foo.js': 'function Foo() {}'
+      });
+
+      expect(() => new MultiGlobalExportWriter(node, {
+        'foo.js': {
+          defaultExport: 'Foo'
+        }
+      })).to.not.throw(Error);
+    });
   });
 });
