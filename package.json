@@ -4,10 +4,11 @@
   "description": "Exports global variables using ES6 module syntax.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "eslint . && npm run unit-test && npm run codecov",
+    "test": "npm run eslint && npm run unit-test && npm run codecov",
     "unit-test": "babel-istanbul cover _mocha -- specs --timeout 5000",
     "codecov": "cat ./coverage/coverage.json | codecov",
-    "prepublish": "rm -rf dist && babel src --out-dir dist"
+    "prepublish": "rm -rf dist && babel src --out-dir dist",
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
