@@ -4,10 +4,11 @@
   "description": "Exports global variables using ES6 module syntax.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "eslint . && npm run unit-test && npm run codecov",
+    "test": "npm run eslint && npm run unit-test && npm run codecov",
     "unit-test": "babel-istanbul cover _mocha -- specs --timeout 5000",
     "codecov": "cat ./coverage/coverage.json | codecov",
-    "prepublish": "rm -rf dist && babel src --out-dir dist"
+    "prepublish": "rm -rf dist && babel src --out-dir dist",
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,11 @@
   "homepage": "https://github.com/noyesa/broccoli-global-exporter#readme",
   "dependencies": {
     "broccoli-plugin": "^1.2.1",
-    "lodash.assign": "^3.2.0",
     "lodash.defaults": "^3.1.2",
     "lodash.first": "^3.0.0",
-    "lodash.includes": "^3.1.3"
+    "lodash.isplainobject": "^3.2.0",
+    "lodash.pairs": "^3.0.1",
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "babel": "^6.3.13",

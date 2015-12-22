@@ -18,23 +18,30 @@ export class BaseGlobalExporter {
    * @returns {string[]} Array of named export strings
    * @abstract
    */
-  getNamedExports() {}
+  getNamedExports() {
+    throw new Error('not implemented');
+  }
 
   /**
    * Returns default export string.
    * @returns {string} Default export string
    * @abstract
    */
-  getDefaultExport() {}
+  getDefaultExport() {
+    throw new Error('not implemented');
+  }
 
   /**
    * Gets array of all the export statements.
    * @returns {string[]} Gets array of all named exports
-   * @private
    */
   getExports() {
     const exports = this.getNamedExports(),
           defaultExport = this.getDefaultExport();
+
+    if (!Array.isArray(exports)) {
+      throw new TypeError('getNamedExports must return an array of strings');
+    }
 
     if (defaultExport) {
       exports.push(defaultExport);
