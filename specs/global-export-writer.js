@@ -44,7 +44,8 @@ describe('GlobalExportWriter', function() {
       expect(fixture).to.deep.equal({
         'foo.js': 'function Foo() {};\nexport default Foo;'
       });
-    }).then(done);
+      done();
+    }, done);
   });
 
   it('adds named exports to the input file', function(done) {
@@ -63,7 +64,8 @@ describe('GlobalExportWriter', function() {
       expect(fixture).to.deep.equal({
         'foo.js': 'function Foo() {};\nexport Foo;'
       });
-    }).then(done);
+      done();
+    }, done);
   });
 
   it('adds default and named exports to the input file', function(done) {
@@ -83,7 +85,8 @@ describe('GlobalExportWriter', function() {
       expect(fixture).to.deep.equal({
         'foo.js': 'function Foo() {};\nvar bar = {};\nexport bar;\nexport default Foo;'
       });
-    }).then(done);
+      done();
+    }, done);
   });
 
   it('adds CommonJS exports', function(done) {
@@ -104,7 +107,8 @@ describe('GlobalExportWriter', function() {
       var foo = fixture['foo.js'];
       expect(foo).to.contain('exports[\'default\'] = Foo');
       expect(foo).to.contain('exports.bar = bar');
-    }).then(done);
+      done();
+    }, done);
   });
 });
 
@@ -142,5 +146,49 @@ describe('MultiGlobalExportWriter', () => {
         .that.is.a('string')
         .that.equals('cjs');
     });
+  });
+
+  describe('build', () => {
+    it('transforms the input file', done => {
+      const tree = new MultiGlobalExportWriter(new fixture.Node({
+        'foo.js': 'function Foo() {}',
+        'bar': {
+          'baz.js': 'var baz = 1;'
+        }
+      }), {
+        'foo.js': {
+          defaultExport: 'Foo'
+        },
+        'bar/baz.js': {
+          defaultExport: 'baz'
+        }
+      });
+
+      fixture.build(tree).then(fixture => {
+        expect(fixture)
+          .to.have.property('foo.js')
+          .that.equals('function Foo() {};\nexport default Foo;');
+
+        expect(fixture)
+          .to.have.property('bar')
+          .that.is.an('object')
+          .that.has.property('baz.js')
+          .that.equals('var baz = 1;\nexport default baz;');
+        done();
+      }, done);
+    });
+
+    it('does nothing if the file does not exist', done => {
+      const tree = new MultiGlobalExportWriter(new fixture.Node(), {
+        'foo.js': {
+          defaultExport: 'Foo'
+        }
+      });
+
+      fixture.build(tree).then(fixture => {
+        expect(fixture).to.not.have.property('foo.js');
+        done();
+      }, done);
+    })
   });
 });
