@@ -1,5 +1,5 @@
 import isPlainObject from 'lodash.isplainobject';
-import GlobalExportWriter, { MultiGlobalExportWriter } from './global-export-writer';
+import { GlobalExportWriter, MultiGlobalExportWriter } from './global-export-writer';
 
 module.exports = exportGlobals;
 

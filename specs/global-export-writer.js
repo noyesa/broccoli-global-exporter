@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import fixture from 'broccoli-fixture';
 
-import GlobalExportWriter from '../src/global-export-writer';
+import { GlobalExportWriter } from '../src/global-export-writer';
 
 describe('GlobalExportWriter', function() {
   it('exists', function() {

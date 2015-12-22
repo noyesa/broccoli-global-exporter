@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import fixture from 'broccoli-fixture';
 
 import exportGlobals from '../src/index';
-import GlobalExportWriter, { MultiGlobalExportWriter } from '../src/global-export-writer';
+import { GlobalExportWriter, MultiGlobalExportWriter } from '../src/global-export-writer';
 
 describe('exportGlobals', () => {
   it('exists', () => {
