@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import BaseGlobalExporter from '../src/exporters/base';
+import BaseGlobalExporter from '../../src/exporters/base';
 
 describe('BaseGlobalExporter', () => {
   it('is a thing', () => expect(BaseGlobalExporter).to.be.a('function'));
