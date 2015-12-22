@@ -1,5 +1,5 @@
-import Es6GlobalExporter from './exporters/es6';
-import CjsGlobalExporter from './exporters/cjs';
+import Es6GlobalExporter from './es6';
+import CjsGlobalExporter from './cjs';
 
 /**
  * Factory function that returns a specific exporter type based on the
@@ -7,7 +7,7 @@ import CjsGlobalExporter from './exporters/cjs';
  * @param {string} moduleType The module type for which to get an Exporter instance
  * @returns {BaseGlobalExporter} Exporter instance
  */
-export function getExporter(moduleType, ...args) {
+export default function exporterFactory(moduleType, ...args) {
   let Exporter = Es6GlobalExporter;
   if (moduleType === 'cjs') {
     Exporter = CjsGlobalExporter;

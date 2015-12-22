@@ -7,7 +7,7 @@ import defaults from 'lodash.defaults';
 import pairs from 'lodash.pairs';
 import { sync as mkdirpSync } from 'mkdirp';
 
-import { getExporter } from './global-exporter';
+import exporterFactory from './exporters/factory';
 
 /**
  * Broccoli plugin that adds ES6 export statements to files.
@@ -34,7 +34,7 @@ export class GlobalExportWriter extends BroccoliPlugin {
     });
 
     this.fileName = fileName;
-    this.exporter = getExporter(options.moduleType, options.defaultExport, options.exports);
+    this.exporter = exporterFactory(options.moduleType, options.defaultExport, options.exports);
   }
 
   /**
@@ -80,7 +80,7 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
    */
   _buildExporters(files) {
     return pairs(files).map(([fileName, options]) => {
-      const exporter = getExporter(this.moduleType, options.defaultExport, options.exports);
+      const exporter = exporterFactory(this.moduleType, options.defaultExport, options.exports);
       return [fileName, exporter];
     });
   }
