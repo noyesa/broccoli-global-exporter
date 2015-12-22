@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "npm run eslint && npm run unit-test && npm run codecov",
-    "unit-test": "babel-istanbul cover _mocha -- specs --timeout 5000",
+    "unit-test": "babel-istanbul cover _mocha -- specs --timeout 5000 --recursive",
     "codecov": "cat ./coverage/coverage.json | codecov",
     "prepublish": "rm -rf dist && babel src --out-dir dist",
     "eslint": "eslint ."
