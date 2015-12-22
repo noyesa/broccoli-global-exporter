@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-
-import BaseGlobalExporter from '../src/exporters/base';
-import { CjsGlobalExporter } from '../src/global-exporter';
+import CjsGlobalExporter from '../../src/exporters/cjs';
+import BaseGlobalExporter from '../../src/exporters/base';
 
 describe('CjsGlobalExporter', function() {
   it('is a thing', function() {

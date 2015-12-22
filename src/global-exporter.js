@@ -1,33 +1,5 @@
-import BaseGlobalExporter from './exporters/base';
 import Es6GlobalExporter from './exporters/es6';
-
-/**
- * Generates CommonJS export statements.
- */
-export class CjsGlobalExporter extends BaseGlobalExporter {
-  /**
-   * Returns export strings for all the named exports.
-   * @returns {string[]} Array of named export strings
-   */
-  getNamedExports() {
-    return this.exports.map(namedExport => `exports.${namedExport} = ${namedExport}`);
-  }
-
-  /**
-   * Returns default export string.
-   * @returns {string} Default export string
-   */
-  getDefaultExport() {
-    if (this.defaultExport) {
-      return `
-        Object.defineProperty(exports, '__esModule', {
-          value: true
-        });
-        exports['default'] = ${this.defaultExport}
-      `;
-    }
-  }
-}
+import CjsGlobalExporter from './exporters/cjs';
 
 /**
  * Factory function that returns a specific exporter type based on the
