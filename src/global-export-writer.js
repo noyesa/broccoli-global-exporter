@@ -81,10 +81,6 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
  */
 export class GlobalExportWriter extends MultiGlobalExportWriter {
   constructor(inputTree, fileName, options = {}) {
-    if (Array.isArray(inputTree)) {
-      throw new TypeError('Multiple input trees not supported');
-    }
-
     // Massage the legacy API into something that works with the new one.
     super(inputTree, {
       [fileName]: {
