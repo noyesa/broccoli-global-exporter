@@ -47,7 +47,7 @@ export default class BaseGlobalExporter {
       exports.push(defaultExport);
     }
 
-    return exports.join(';\n') + ';';
+    return `${exports.join(';\n')};`;
   }
 
   /**

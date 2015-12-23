@@ -1,12 +1,5 @@
 {
   "env": {
-    "mocha": true,
-    "es6": true
-  },
-  "ecmaFeatures": {
-    "modules": true
-  },
-  "rules": {
-    "no-var": 2
+    "mocha": true
   }
 }

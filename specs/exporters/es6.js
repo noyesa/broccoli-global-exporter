@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import Es6GlobalExporter from '../../src/exporters/es6';
 import BaseGlobalExporter from '../../src/exporters/base';
 
-describe('Es6GlobalExporter', function() {
-  it('is a thing', function() {
+describe('Es6GlobalExporter', () => {
+  it('is a thing', () => {
     expect(Es6GlobalExporter).to.be.a('function');
   });
 
