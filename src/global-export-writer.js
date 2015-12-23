@@ -21,6 +21,10 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
    * @param {string} [options.moduleType=es2015] Output module type
    */
   constructor(inputTree, files, options = {}) {
+    if (Array.isArray(inputTree)) {
+      throw new TypeError('multiple input trees not supported');
+    }
+
     super([inputTree], {
       annotations: options.annotations
     });
