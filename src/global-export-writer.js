@@ -73,6 +73,7 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
  * @param {string} [options.defaultExport] The name of the default export for the file
  * @param {string[]} [options.exports=[]] List of named exports
  * @param {string} [options.moduleType=es2015] Type of module exports
+ * @deprecated Since v0.6.1
  */
 export class GlobalExportWriter extends MultiGlobalExportWriter {
   constructor(inputTree, fileName, options = {}) {
