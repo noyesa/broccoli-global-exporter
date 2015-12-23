@@ -10,45 +10,6 @@ import { sync as mkdirpSync } from 'mkdirp';
 import exporterFactory from './exporters/factory';
 
 /**
- * Broccoli plugin that adds ES6 export statements to files.
- * @param {string|object} inputTree The tree that contains the file that exports will be added to
- * @param {string} fileName Name of the file in the input tree to add exports to
- * @param {object} [options={}] Configuration options for export writer
- * @param {string} [options.defaultExport] The name of the default export for the file
- * @param {string[]} [options.exports=[]] List of named exports
- * @param {string} [options.moduleType=es2015] Type of module exports
- */
-export class GlobalExportWriter extends BroccoliPlugin {
-  constructor(inputTree, fileName, options = {}) {
-    defaults(options, {
-      exports: [],
-      moduleType: 'es2015'
-    });
-
-    if (Array.isArray(inputTree)) {
-      throw new TypeError('Does not support more than one input tree');
-    }
-
-    super([inputTree], {
-      annotations: options.annotations
-    });
-
-    this.fileName = fileName;
-    this.exporter = exporterFactory(options.moduleType, options.defaultExport, options.exports);
-  }
-
-  /**
-   * Adds exports to a source code file.
-   */
-  build() {
-    const srcPath = path.join(first(this.inputPaths), this.fileName),
-          destPath = path.join(this.outputPath, this.fileName),
-          sourceCode = this.exporter.processSourceCode(fs.readFileSync(srcPath, 'utf8'));
-    fs.writeFileSync(destPath, sourceCode);
-  }
-}
-
-/**
  * Broccoli plugin that adds export statements to JavaScript files.
  */
 export class MultiGlobalExportWriter extends BroccoliPlugin {
@@ -101,5 +62,31 @@ export class MultiGlobalExportWriter extends BroccoliPlugin {
         fs.writeFileSync(destPath, sourceCode);
       }
     });
+  }
+}
+
+/**
+ * Broccoli plugin that adds ES6 export statements to files.
+ * @param {string|object} inputTree The tree that contains the file that exports will be added to
+ * @param {string} fileName Name of the file in the input tree to add exports to
+ * @param {object} [options={}] Configuration options for export writer
+ * @param {string} [options.defaultExport] The name of the default export for the file
+ * @param {string[]} [options.exports=[]] List of named exports
+ * @param {string} [options.moduleType=es2015] Type of module exports
+ * @deprecated Since v0.6.1
+ */
+export class GlobalExportWriter extends MultiGlobalExportWriter {
+  constructor(inputTree, fileName, options = {}) {
+    if (Array.isArray(inputTree)) {
+      throw new TypeError('Multiple input trees not supported');
+    }
+
+    // Massage the legacy API into something that works with the new one.
+    super(inputTree, {
+      [fileName]: {
+        defaultExport: options.defaultExport,
+        exports: options.exports
+      }
+    }, options);
   }
 }
