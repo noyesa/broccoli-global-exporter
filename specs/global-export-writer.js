@@ -128,6 +128,19 @@ describe('MultiGlobalExportWriter', () => {
       })).to.not.throw(Error);
     });
 
+    it('throws an error when constructed with a list of input nodes', () => {
+      const nodes = [
+        { 'foo.js': 'function Foo() {}' },
+        { 'bar.js': 'function Bar() {}' }
+      ].map(files => new fixture.Node(files));
+
+      expect(() => new MultiGlobalExportWriter(nodes, {
+        'foo.js': {
+          defaultExport: 'Foo'
+        }
+      })).to.throw(Error);
+    });
+
     it('sets moduleType property from options object', () => {
       const inputTree = new fixture.Node({
         'foo.js': 'function Foo() {}'
