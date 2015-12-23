@@ -3,24 +3,22 @@ import fixture from 'broccoli-fixture';
 
 import { GlobalExportWriter, MultiGlobalExportWriter } from '../src/global-export-writer';
 
-describe('GlobalExportWriter', function() {
-  it('exists', function() {
+describe('GlobalExportWriter', () => {
+  it('exists', () => {
     expect(GlobalExportWriter).to.be.a('function');
   });
 
-  describe('construction', function() {
-    it('throws an error when either defaultExport or exports is not passed', function() {
-      var inputTree = new fixture.Node({
+  describe('construction', () => {
+    it('throws an error when either defaultExport or exports is not passed', () => {
+      const inputTree = new fixture.Node({
         'foo.js': 'function Foo() {}'
       });
 
-      expect(function() {
-        new GlobalExportWriter(inputTree, 'foo.js');
-      }).to.throw(Error);
+      expect(() => new GlobalExportWriter(inputTree, 'foo.js')).to.throw(Error);
     });
 
-    it('throws an error when a list of nodes is passed', function() {
-      expect(function() {
+    it('throws an error when a list of nodes is passed', () => {
+      expect(() => {
         new GlobalExportWriter([new fixture.Node()], 'foo.js', {
           defaultExport: 'Foo'
         });
@@ -28,19 +26,16 @@ describe('GlobalExportWriter', function() {
     });
   });
 
-  it('adds default exports to the input file', function(done) {
-    var files,
-        inputTree;
-
-    files = {
+  it('adds default exports to the input file', done => {
+    const inputTree = new fixture.Node({
       'foo.js': 'function Foo() {}'
-    };
+    });
 
-    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    const writer = new GlobalExportWriter(inputTree, 'foo.js', {
       defaultExport: 'Foo'
     });
 
-    fixture.build(inputTree).then(function(outputTree) {
+    fixture.build(writer).then(outputTree => {
       expect(outputTree).to.deep.equal({
         'foo.js': 'function Foo() {};\nexport default Foo;'
       });
@@ -48,19 +43,16 @@ describe('GlobalExportWriter', function() {
     }, done);
   });
 
-  it('adds named exports to the input file', function(done) {
-    var files,
-        inputTree;
-
-    files = {
+  it('adds named exports to the input file', done => {
+    const node = new fixture.Node({
       'foo.js': 'function Foo() {}'
-    };
+    });
 
-    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    const inputTree = new GlobalExportWriter(node, 'foo.js', {
       exports: ['Foo']
     });
 
-    fixture.build(inputTree).then(function(outputTree) {
+    fixture.build(inputTree).then(outputTree => {
       expect(outputTree).to.deep.equal({
         'foo.js': 'function Foo() {};\nexport Foo;'
       });
@@ -68,20 +60,17 @@ describe('GlobalExportWriter', function() {
     }, done);
   });
 
-  it('adds default and named exports to the input file', function(done) {
-    var files,
-        inputTree;
-
-    files = {
+  it('adds default and named exports to the input file', done => {
+    const node = new fixture.Node({
       'foo.js': 'function Foo() {};\nvar bar = {};'
-    };
+    });
 
-    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    const inputTree = new GlobalExportWriter(node, 'foo.js', {
       defaultExport: 'Foo',
       exports: ['bar']
     });
 
-    fixture.build(inputTree).then(function(outputTree) {
+    fixture.build(inputTree).then(outputTree => {
       expect(outputTree).to.deep.equal({
         'foo.js': 'function Foo() {};\nvar bar = {};\nexport bar;\nexport default Foo;'
       });
@@ -89,24 +78,23 @@ describe('GlobalExportWriter', function() {
     }, done);
   });
 
-  it('adds CommonJS exports', function(done) {
-    var files,
-        inputTree;
-
-    files = {
+  it('adds CommonJS exports', done => {
+    const node = new fixture.Node({
       'foo.js': 'function Foo() {};\nvar bar = {};'
-    };
+    });
 
-    inputTree = new GlobalExportWriter(new fixture.Node(files), 'foo.js', {
+    const inputTree = new GlobalExportWriter(node, 'foo.js', {
       defaultExport: 'Foo',
       exports: ['bar'],
       moduleType: 'cjs'
     });
 
-    fixture.build(inputTree).then(function(outputTree) {
-      var foo = outputTree['foo.js'];
-      expect(foo).to.contain('exports[\'default\'] = Foo');
-      expect(foo).to.contain('exports.bar = bar');
+    fixture.build(inputTree).then(outputTree => {
+      expect(outputTree)
+        .to.have.property('foo.js')
+        .that.is.a('string')
+        .that.contains('exports[\'default\'] = Foo')
+        .and.contains('exports.bar = bar');
       done();
     }, done);
   });
