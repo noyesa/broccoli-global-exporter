@@ -78,3 +78,6 @@ exports['default'] = Foo;
 ```
 
 This CJS output is compatible with the way code compiled with babel looks for ES6 default exports by checking the `__esModule` property on the object returned from `require`. If you have no default export, this code will not be emitted.
+
+## Contributing
+Issues and PRs are very welcome. PRs are likely to be merged if you don't change the existing tests too much, code coverage doesn't drop, and you respect the existing code style, which is pretty heavily enforced by the linter (so don't suppress it).
