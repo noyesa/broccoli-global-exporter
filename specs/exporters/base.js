@@ -39,7 +39,7 @@ describe('BaseGlobalExporter', () => {
     });
 
     it('can be constructed without passing a default export', function() {
-      var exporter = new BaseGlobalExporter(undefined, ['foo', 'bar']);
+      const exporter = new BaseGlobalExporter(undefined, ['foo', 'bar']);
 
       expect(exporter)
         .to.have.property('defaultExport')

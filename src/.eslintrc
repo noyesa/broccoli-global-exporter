@@ -4,5 +4,8 @@
   },
   "ecmaFeatures": {
     "modules": true
+  },
+  "rules": {
+    "no-var": 2
   }
 }
