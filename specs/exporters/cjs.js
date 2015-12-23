@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import CjsGlobalExporter from '../../src/exporters/cjs';
 import BaseGlobalExporter from '../../src/exporters/base';
 
-describe('CjsGlobalExporter', function() {
-  it('is a thing', function() {
+describe('CjsGlobalExporter', () => {
+  it('is a thing', () => {
     expect(CjsGlobalExporter).to.be.a('function');
   });
 

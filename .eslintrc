@@ -1,9 +1,48 @@
 {
   "extends": "eslint:recommended",
   "env": {
-    "node": true
+    "node": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "modules": true
   },
   "rules": {
-    "semi": [2, "always"]
+    "semi": [2, "always"],
+    "no-var": 2,
+    "arrow-body-style": [2, "as-needed"],
+    "arrow-parens": [2, "as-needed"],
+    "arrow-spacing": 2,
+    "no-const-assign": 2,
+    "no-this-before-super": 2,
+    "object-shorthand": 2,
+    "prefer-arrow-callback": 2,
+    "prefer-const": 2,
+    "prefer-spread": 2,
+    "prefer-template": 2,
+    "space-before-function-paren": [2, "never"],
+    "dot-location": [2, "property"],
+    "space-before-blocks": 2,
+    "no-multi-spaces": 2,
+    "curly": 2,
+    "no-sequences": 2,
+    "no-with": 2,
+    "wrap-iife": [2, "outside"],
+    "constructor-super": 2,
+    "array-bracket-spacing": [2, "never"],
+    "brace-style": [2, "1tbs", {
+      "allowSingleLine": false
+    }],
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true,
+      "mode": "strict"
+    }],
+    "new-cap": 2,
+    "new-parens": 2,
+    "no-spaced-func": 2,
+    "space-after-keywords": 2,
+    "space-infix-ops": 2,
+    "space-in-parens": 2
   }
 }

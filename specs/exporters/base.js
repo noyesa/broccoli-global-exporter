@@ -9,20 +9,18 @@ describe('BaseGlobalExporter', () => {
       expect(() => new BaseGlobalExporter()).to.throw(Error);
     });
 
-    it('instantiates without error when defaultExport is specified', function() {
-      expect(function() {
-        new BaseGlobalExporter('Foo');
-      }).to.not.throw(Error);
+    it('instantiates without error when defaultExport is specified', () => {
+      expect(() => new BaseGlobalExporter('Foo')).to.not.throw(Error);
     });
 
-    it('sets the property defaultExports with the first argument', function() {
+    it('sets the property defaultExports with the first argument', () => {
       const exporter = new BaseGlobalExporter('Foo');
       expect(exporter)
         .to.have.property('defaultExport')
         .that.equals('Foo');
     });
 
-    it('sets exports to an empty array when not provided', function() {
+    it('sets exports to an empty array when not provided', () => {
       const exporter = new BaseGlobalExporter('Foo');
       expect(exporter)
         .to.have.property('exports')
@@ -30,7 +28,7 @@ describe('BaseGlobalExporter', () => {
         .that.is.empty;
     });
 
-    it('sets exports to the passed exports when provided', function() {
+    it('sets exports to the passed exports when provided', () => {
       const exporter = new BaseGlobalExporter('Foo', ['bar', 'baz']);
       expect(exporter)
         .to.have.property('exports')
@@ -38,8 +36,8 @@ describe('BaseGlobalExporter', () => {
         .that.deep.equals(['bar', 'baz']);
     });
 
-    it('can be constructed without passing a default export', function() {
-      var exporter = new BaseGlobalExporter(undefined, ['foo', 'bar']);
+    it('can be constructed without passing a default export', () => {
+      const exporter = new BaseGlobalExporter(undefined, ['foo', 'bar']);
 
       expect(exporter)
         .to.have.property('defaultExport')
