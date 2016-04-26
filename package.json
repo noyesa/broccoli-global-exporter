@@ -1,6 +1,6 @@
 {
   "name": "broccoli-global-exporter",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Exports global variables using ES6 module syntax.",
   "main": "dist/index.js",
   "scripts": {
